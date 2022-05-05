@@ -14,7 +14,7 @@ namespace DBManyToManyTest1
         public DbSet<Course> Courses { get; set; }
 
 
-        //DbSet for joining table. Behövs det?
+        //DbSet for joining table. Behövs det? (ja, eftersom vi ställer querys mot dem)
         public DbSet<Course_Students> Course_Students { get; set; }
         public DbSet<Teacher_Classes> Teacher_Classes { get; set; }
         public DbSet<Teacher_Courses> Teacher_Courses { get; set; }

@@ -50,6 +50,7 @@ namespace DBManyToManyTest1
             }
         }
 
+
         public static void GetTeacherPrg1()
         {
             Console.Clear();
@@ -65,8 +66,7 @@ namespace DBManyToManyTest1
 
                            select new
                            {
-                               TeacherName = t.Name,
-                               CourseName = c.Name
+                               TeacherName = t.Name
                            }
                            ).ToList();
 
@@ -83,10 +83,17 @@ namespace DBManyToManyTest1
             ContextHandler context = new ContextHandler();
 
             var studentTeacher = (from s in context.Students
-                                  join ts in context.Teacher_Students
-                                  on s.Id equals ts.StudentId
+                                  join cs in context.Course_Students
+                                  on s.Id equals cs.StudentId
+
+                                  join c in context.Courses
+                                  on cs.CourseId equals c.Id
+
+                                  join tc in context.Teacher_Courses
+                                  on c.Id equals tc.CourseId
+
                                   join t in context.Teachers
-                                  on ts.TeacherId equals t.Id
+                                  on tc.TeacherId equals t.Id
                                   select new
                                   {
                                       StudentName = s.Name,
@@ -108,14 +115,18 @@ namespace DBManyToManyTest1
             ContextHandler context = new ContextHandler();
 
             var studentTeacherPrg1 = (from s in context.Students
-                                      join ts in context.Teacher_Students
-                                      on s.Id equals ts.StudentId
-                                      join t in context.Teachers
-                                      on ts.TeacherId equals t.Id
                                       join cs in context.Course_Students
                                       on s.Id equals cs.StudentId
+
                                       join c in context.Courses
                                       on cs.CourseId equals c.Id
+
+                                      join tc in context.Teacher_Courses
+                                      on c.Id equals tc.CourseId
+
+                                      join t in context.Teachers
+                                      on tc.TeacherId equals t.Id
+
                                       where c.Name == "Programmering 1"
                                       select new
                                       {
